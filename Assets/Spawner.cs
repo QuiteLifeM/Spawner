@@ -9,14 +9,14 @@ public class Spawner : MonoBehaviour
     private WaitForSeconds _waitForSeconds;
     private int _delay = 3;
 
-    private void Start()
-    {
-        StartCoroutine(Spawn());
-    }
-
     private void Awake()
     {
         _waitForSeconds = new WaitForSeconds(_delay);
+    }
+
+    private void Start()
+    {
+        StartCoroutine(Spawn());
     }
 
     private IEnumerator Spawn()
