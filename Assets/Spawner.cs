@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] private Transform[] _points;
+    [SerializeField] private Point[] _points;
     [SerializeField] private Enemy _enemy;
 
     private WaitForSeconds _waitForSeconds;
-    private int _delay = 3;
+    private float _delay = 0.5f;
 
     private void Awake()
     {
@@ -23,9 +23,11 @@ public class Spawner : MonoBehaviour
     {
         while (enabled)
         {
-            Transform point = _points[Random.Range(0, _points.Length)];
-            Enemy newEnemy = Instantiate(_enemy, point.position, Quaternion.identity);
-            newEnemy.SetDirection(Vector3.up);
+            Point point = _points[Random.Range(0, _points.Length)];
+            Enemy newEnemy = Instantiate(_enemy, point.transform.position, Quaternion.identity);
+            Transform target = point.GetRandomTarget();
+
+            newEnemy.SetDirection(target);
 
             yield return _waitForSeconds;
         }

@@ -1,20 +1,20 @@
 using System.Collections;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
     [SerializeField] private float _speed;
 
-    public void SetDirection(Vector3 direction)
+    public void SetDirection(Transform target)
     {
-        StartCoroutine(Move(direction));
+        StartCoroutine(Move(target));
     }
 
-    private IEnumerator Move(Vector3 direction)
+    private IEnumerator Move(Transform target)
     {
         while (enabled)
         {
-            transform.Translate(direction * _speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, target.position, _speed * Time.deltaTime);
 
             yield return null;
         }
